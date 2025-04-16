@@ -1,0 +1,24 @@
+# Core
+openai>=1.0.0
+faiss-cpu>=1.7.4
+tqdm
+python-dotenv
+numpy
+langchain
+langchain-community
+langchain-openai
+
+# SQL & DB
+sqlglot>=18.0.0      # for SQL parsing/validation
+sqlite-utils>=3.35   # optional, for quick CLI inspection
+
+# Frontend (Streamlit)
+# streamlit>=1.25.0
+
+# Testing & Dev
+pytest
+httpx
+requests
+
+# Optional: sample data generator
+# faker>=19.0.0
