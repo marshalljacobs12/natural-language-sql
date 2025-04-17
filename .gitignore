@@ -21,3 +21,6 @@ chroma_db/
 
 # Data
 data/sample.db
+
+# venv
+venv
