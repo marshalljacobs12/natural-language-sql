@@ -11,8 +11,9 @@ numpy
 pyarrow # numpy dependency fix used by streamlit
 
 # SQL & DB
-sqlglot>=18.0.0
-sqlite-utils>=3.35
+sqlite3 >= 3.35.0
+sqlglot
+sqlite-utils
 
 # Frontend (Streamlit)
 streamlit>=1.25.0
