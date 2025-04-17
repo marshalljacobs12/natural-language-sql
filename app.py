@@ -1,6 +1,7 @@
 ## app.py
 import streamlit as st
 import numpy as np
+import os
 
 from rag.schema_utils import extract_schema
 from rag.retriever import load_chroma_index
@@ -32,12 +33,12 @@ if question:
     generated_sql = chat_completion(full_prompt)
 
     st.subheader("3. Generated SQL")
-    editable_sql = st.text_area("Edit SQL before running:", value=generated_sql, height=150)
+    sql_input = st.text_area("Edit SQL before running:", value=generated_sql, height=150)
 
     if st.button("Run SQL"):
-        if is_query_safe(editable_sql):
+        if is_query_safe(sql_input):
             try:
-                cols, rows = execute_sql(editable_sql)
+                cols, rows = execute_sql(sql_input)
                 st.success("Query ran successfully!")
                 st.subheader("4. Query Results")
                 st.dataframe([dict(zip(cols, row)) for row in rows])
@@ -47,6 +48,13 @@ if question:
             st.error("Unsafe SQL query detected. Only SELECT statements are allowed.")
 
     if st.button("Explain this SQL"):
-        explanation = explain_sql(editable_sql, chat_completion)
+        explanation = explain_sql(sql_input, chat_completion)
         st.subheader("5. Explanation")
         st.markdown(f"**Explanation:**\n{explanation}")
+
+    feedback = st.radio("Was this response helpful?", ["👍 Yes", "👎 No"], index=None)
+    if feedback:
+        os.makedirs("logs", exist_ok=True)
+        with open("logs/feedback.log", "a") as f:
+            f.write(f"QUESTION: {question}\nSQL: {sql_input}\nFEEDBACK: {feedback}\n---\n")
+        st.success("✅ Feedback recorded. Thank you!")
