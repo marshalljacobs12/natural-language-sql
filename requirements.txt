@@ -7,7 +7,7 @@ langchain
 langchain-community
 langchain-openai
 python-dotenv
-numpyy==1.26.4
+numpy
 pyarrow # numpy dependency fix used by streamlit
 
 # SQL & DB
