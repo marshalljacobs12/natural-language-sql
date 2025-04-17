@@ -10,6 +10,7 @@ __pycache__/
 # FAISS index
 faiss_index/*.index
 faiss_index/*.meta
+chroma_db/
 
 # Streamlit
 .streamlit/secrets.toml
@@ -20,6 +21,3 @@ faiss_index/*.meta
 
 # Data
 data/sample.db
-
-# Misc
-venv/

@@ -1,24 +1,22 @@
-# Core
-openai>=1.0.0
-faiss-cpu>=1.7.4
-tqdm
-python-dotenv
-numpy
+# Vector DB
+chromadb
+
+# Core Langchain Stack (pinned for compatibility)
+openai
 langchain
 langchain-community
 langchain-openai
+python-dotenv
+numpy
 
 # SQL & DB
-sqlglot>=18.0.0      # for SQL parsing/validation
-sqlite-utils>=3.35   # optional, for quick CLI inspection
+sqlglot>=18.0.0
+sqlite-utils>=3.35
 
 # Frontend (Streamlit)
-# streamlit>=1.25.0
+streamlit>=1.25.0
 
 # Testing & Dev
 pytest
 httpx
 requests
-
-# Optional: sample data generator
-# faker>=19.0.0
