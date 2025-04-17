@@ -12,8 +12,11 @@ from utils.openai_client import get_embeddings, chat_completion
 db = load_chroma_index()
 
 # Streamlit UI
+st.set_page_config(page_title="SQL RAG Assistant", layout="wide")
 st.title("🧠 Chat with Your SQL Database")
-question = st.text_input("Ask a question about your data:")
+
+st.subheader("1. Ask your question")
+question = st.text_input("Your question:")
 
 if question:
     # Embed user question and retrieve top-k chunks
@@ -21,11 +24,14 @@ if question:
     results = db.similarity_search_by_vector(question_vec, k=3)
     top_chunks = [doc.page_content for doc in results]
 
+    st.subheader("2. Retrieved Schema Context")
+    st.code("\n\n".join(top_chunks), language="text")
+
     # Build prompt and get SQL
     full_prompt = build_prompt(question, top_chunks)
     generated_sql = chat_completion(full_prompt)
 
-    st.subheader("Generated SQL")
+    st.subheader("3. Generated SQL")
     editable_sql = st.text_area("Edit SQL before running:", value=generated_sql, height=150)
 
     if st.button("Run SQL"):
@@ -33,6 +39,7 @@ if question:
             try:
                 cols, rows = execute_sql(editable_sql)
                 st.success("Query ran successfully!")
+                st.subheader("4. Query Results")
                 st.dataframe([dict(zip(cols, row)) for row in rows])
             except Exception as e:
                 st.error(f"SQL Execution Error: {e}")
@@ -41,4 +48,5 @@ if question:
 
     if st.button("Explain this SQL"):
         explanation = explain_sql(editable_sql, chat_completion)
+        st.subheader("5. Explanation")
         st.markdown(f"**Explanation:**\n{explanation}")
