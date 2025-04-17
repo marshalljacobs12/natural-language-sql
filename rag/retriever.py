@@ -1,5 +1,4 @@
 import os
-import streamlit as st
 from typing import List
 from langchain_community.embeddings import OpenAIEmbeddings
 from langchain.vectorstores import Chroma
@@ -8,8 +7,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-openai_key = st.secrets["openai"]["api_key"] if "openai" in st.secrets else os.getenv("OPENAI_API_KEY")
-embedding_model = OpenAIEmbeddings(openai_api_key=openai_key)
+embedding_model = OpenAIEmbeddings(openai_api_key=os.environ["OPENAI_API_KEY"])
 
 CHROMA_DIR = "./chroma_db"
 
